@@ -350,7 +350,7 @@ describe('Bookmarks Endpoints', () => {
           .send({ irrelevantField: 'foo' })
           .expect(400, {
             error: {
-              message: `Request body must content either 'title', 'url', 'description' or 'rating'`
+              message: `Request body must contain either 'title', 'url', 'description' or 'rating'`
             }
           })
       })
@@ -392,7 +392,7 @@ describe('Bookmarks Endpoints', () => {
           .send(updateInvalidRating)
           .expect(400, {
             error: {
-              message: `rating' must be a number between 0 and 5`
+              message: `'rating' must be a number between 0 and 5`
             }
           })
       })
