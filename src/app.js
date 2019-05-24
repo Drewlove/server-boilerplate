@@ -6,8 +6,8 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const validateBearerToken = require('./validate-bearer-token')
 const errorHandler = require('./error-handler')
-const bookmarksRouter = require('./bookmarks/bookmarks-router')
 
+const table_oneRouter = require('./table_one/router')
 const app = express()
 
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
@@ -17,7 +17,8 @@ app.use(cors())
 app.use(helmet())
 app.use(validateBearerToken)
 
-app.use('/api/bookmarks/', bookmarksRouter)
+//Rename URL and router
+app.use('/api/table_one/', table_oneRouter)
 
 app.use(errorHandler)
 
