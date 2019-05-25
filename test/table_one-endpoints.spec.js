@@ -2,6 +2,7 @@ const knex = require('knex')
 const {makeItemsArray, makeMaliciousItem} = require('./table_one-fixtures')
 const app = require('../src/app')
 
+//Rename table and properties array
 const table = 'table_one' 
 const properties = ['first_name', 'age']
 
@@ -262,6 +263,7 @@ describe(`${table} Endpoints`, () => {
         )
     })
 
+    //Rename, work in additional fields that could have XSS content
     it('removes XSS attack content from response', () => {
       const { maliciousItem, expectedItem } = makeMaliciousItem()
       return supertest(app)
@@ -297,11 +299,7 @@ describe(`${table} Endpoints`, () => {
 
       it(`responds with 204 and updates the ${table}`, () => {
         const idToUpdate = 2
-        //Rename with appropriate properties for item
-        // const updateItem= {
-        //   first_name: 'Update first name', 
-        //   age: 900
-        // }
+
         const expectedItem = {
           ...testItems[idToUpdate - 1],
           ...patchItemAllFields

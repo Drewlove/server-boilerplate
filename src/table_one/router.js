@@ -3,9 +3,9 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../logger')
 const Service = require('./service')
-//Rename table
+
+//Rename table and array properties
 const table = 'table_one'
-//Rename array of properties
 const properties = ['first_name', 'age']
 
 

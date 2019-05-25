@@ -6,8 +6,6 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const validateBearerToken = require('./validate-bearer-token')
 const errorHandler = require('./error-handler')
-
-const table_oneRouter = require('./table_one/router')
 const app = express()
 
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
@@ -17,7 +15,8 @@ app.use(cors())
 app.use(helmet())
 app.use(validateBearerToken)
 
-//Rename URL and router
+//Rename router and URL
+const table_oneRouter = require('./table_one/router')
 app.use('/api/table_one/', table_oneRouter)
 
 app.use(errorHandler)
