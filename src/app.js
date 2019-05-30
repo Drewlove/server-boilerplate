@@ -15,7 +15,7 @@ app.use(cors())
 app.use(helmet())
 app.use(validateBearerToken)
 
-//Rename router and URL
+//ENV SET UP router and URL
 const table_oneRouter = require('./table_one/router')
 app.use('/api/table_one/', table_oneRouter)
 

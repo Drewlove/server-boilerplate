@@ -2,7 +2,8 @@ const knex = require('knex')
 const {makeItemsArray, makeMaliciousItem} = require('./table_one-fixtures')
 const app = require('../src/app')
 
-//Rename table and properties array
+//ENV SET UP, 
+//change table name and add properties in table into array
 const table = 'table_one' 
 const properties = ['first_name', 'age']
 
@@ -115,7 +116,8 @@ describe(`${table} Endpoints`, () => {
           .into(table)
           .insert([maliciousItem])
       })
-//Rename to have fields with potential xss content in the expect statement
+//ENV SET UP, 
+//have fields with potential xss content in the expect statement
       it('removes XSS attack content', () => {
         return supertest(app)
           .get(`/api/${table}`)
@@ -219,7 +221,8 @@ describe(`${table} Endpoints`, () => {
       })
     })
   })
-//Rename name and age properties below with properties of actual table
+//ENV SET UP
+//replace first_name and age properties below with properties of actual table
   describe(`POST /api/${table}`, () => {
     properties.forEach(field => {
       const newItem = {
@@ -263,7 +266,9 @@ describe(`${table} Endpoints`, () => {
         )
     })
 
-    //Rename, work in additional fields that could have XSS content
+    //ENV SET UP
+    //add all additional fields that could have XSS content
+    //into expect statement below
     it('removes XSS attack content from response', () => {
       const { maliciousItem, expectedItem } = makeMaliciousItem()
       return supertest(app)
@@ -272,6 +277,7 @@ describe(`${table} Endpoints`, () => {
         .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
         .expect(201)
         .expect(res => {
+          //ENV SET UP, add here
           expect(res.body.first_name).to.eql(expectedItem.first_name)
         })
     })

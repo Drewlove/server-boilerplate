@@ -1,4 +1,4 @@
-//Rename table
+//ENV SET UP, change table name
 const table = 'table_one'
 
 const Service = {

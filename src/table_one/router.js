@@ -4,7 +4,7 @@ const xss = require('xss')
 const logger = require('../logger')
 const Service = require('./service')
 
-//Rename table and array properties
+//ENV SET UP table and array properties
 const table = 'table_one'
 const properties = ['first_name', 'age']
 
@@ -12,7 +12,7 @@ const properties = ['first_name', 'age']
 const router = express.Router()
 const bodyParser = express.json()
 
-//Rename properties and values
+//ENV SET UP properties and values
 const serializeItem= item => ({
   id: item.id,
   first_name: xss(item.first_name),
