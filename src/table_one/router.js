@@ -30,25 +30,43 @@ router
       .catch(next)
   })
 
+  .get((req, res, next) => {
+    Service.getAll(req.app.get('db'))
+      .then(item => {
+        res.json(item.map(serializeItem))
+      })
+      .catch(next)
+  })
+
+  .get((req, res, next) => {
+    Service.getAll(req.app.get('db'))
+      .then(item => {
+        res.json(item.map(serializeItem))
+      })
+      .catch(next)
+  })
+
+router
+  .route('/add')
   .post(bodyParser, (req, res, next) => {
     const entries = Object.entries(req.body)
     let newItem = {}
     entries.map(entry => {
-      newItem[entry[0]] = entry[1]
+      if(entry[0] === "id"){
+        return 
+      } else {
+        newItem[entry[0]] = entry[1]
+      }
     })
 
     for (const field of properties) {
       if (!newItem[field]) {
-        logger.error(`Table ${table}: ${field} is required`)
+        logger.error(`${field} is required`)
         return res.status(400).send({
           error: { message: `'${field}' is required` }
         })
       }
     }
-
-    // const error = getBookmarkValidationError(newBookmark)
-
-    // if (error) return res.status(400).send(error)
 
     Service.insertItem(
       req.app.get('db'),
@@ -62,9 +80,9 @@ router
           .json(serializeItem(item))
       })
       .catch(next)
-  })
-
-
+  })  
+ 
+  
 router
   .route('/:item_id')
 
@@ -116,7 +134,7 @@ router
 
     const numberOfValues = Object.values(updatedItem).filter(Boolean).length
     if (numberOfValues === 0) {
-      logger.error(`Invalid update without required fields`)
+      logger.error(`Invalid update without required fields ${numberOfValues}`)
       return res.status(400).json({
         error: {
           message: `Request body must contain either ${properties}`
