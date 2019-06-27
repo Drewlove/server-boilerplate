@@ -126,15 +126,15 @@ router
       updatedFields[entry[0]] = entry[1]
     })
 
-    let updatedItem = {}
-    properties.forEach(prop => {
-      updatedItem[prop] = updatedFields[prop]
+    let keysMissingValues = []; 
+    Object.keys(updatedItem).map(key => {
+      if(updatedItem[key] === ''){
+        keysMissingValues.push(key)
+      }
     })
 
-
-    const numberOfValues = Object.values(updatedItem).filter(Boolean).length
-    if (numberOfValues === 0) {
-      logger.error(`Invalid update without required fields ${numberOfValues}`)
+    if (keysMissingValues.length > 0) {
+      logger.error(`Invalid update for table: '${table}', missing values for: ${keysMissingValues}`)
       return res.status(400).json({
         error: {
           message: `Request body must contain either ${properties}`
